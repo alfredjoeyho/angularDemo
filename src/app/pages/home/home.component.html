@@ -1,0 +1,82 @@
+<nav class="navbar navbar-dark bg-warning">
+  <div class="container-fluid">
+    <h1 class="navbar-brand">Posts</h1>
+  </div>
+</nav>
+<div class="container mt-2">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div
+      class="col pointer"
+      *ngFor="
+        let post of allPost | paginate: { itemsPerPage: 10, currentPage: pages }
+      "
+      (click)="getPostDetails(post)"
+    >
+      <div class="card">
+        <div class="card-body card-background">
+          <h1 class="card-title font-white">title: {{ post.title }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<textarea
+  matInput
+  [(ngModel)]="userNameEntered"
+  placeholder="Enter Username"
+></textarea>
+<button mat-button (click)="searchUser()">Search</button>
+
+<!-- <div class="container mt-2">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let post of allPosts$ | async">
+      <div class="card">
+        <div class="card-body card-background">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item font-white">userId: {{ post.userId }}</li>
+            <li class="list-group-item font-white">id: {{ post.id }}</li>
+          </ul>
+          <h1 class="card-title font-white">title: {{ post.title }}</h1>
+        </div>
+        <div class="card-body font-white">
+          <p>body: {{ post.body }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- ------Name------
+<div class="container mt-2">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let user of filteredUser$ | async">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ user.name }}</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">name: {{ user.name }}</li>
+            <li class="list-group-item">name: {{ user.name }}</li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <p>{{ user.name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="container mt-2">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let user of filteredPost | paginate: { itemsPerPage: 10, currentPage: pages }">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ user.title}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<pagination-controls (pageChange)="pages = $event"></pagination-controls>

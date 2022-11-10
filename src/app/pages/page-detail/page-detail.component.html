@@ -1,0 +1,18 @@
+<h1>Post Details</h1>
+<div class="container mt-2">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="card">
+        <div class="card-body card-background">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item font-white">userId: {{ userId }}</li>
+            <li class="list-group-item font-white">id: {{ id }}</li>
+          </ul>
+          <h1 class="card-title font-white">title: {{ title }}</h1>
+        </div>
+        <div class="card-body font-white">
+          <p>body: {{ body }}</p>
+        </div>
+      </div>
+  </div>
+  <button mat-button (click)="backClicked()">Back</button>
+</div>
