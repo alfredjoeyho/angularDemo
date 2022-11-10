@@ -6,11 +6,8 @@ import {
 } from '@ngrx/data';
 import {
   combineLatest,
-  first,
   map,
   Observable,
-  Subscription,
-  take,
 } from 'rxjs';
 import { Posts } from '../store/posts';
 import { Router } from '@angular/router';
