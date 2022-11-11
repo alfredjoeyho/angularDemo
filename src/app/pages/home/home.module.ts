@@ -7,10 +7,23 @@ import { HomeComponent } from './home.component';
 import { postsEntityMetaData } from '../store/post-entity-metadata';
 import { usersEntityMetaData } from '../store/user-entity-metadata';
 import { HomeRoutingModule } from './home-routing.module';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [CommonModule, FormsModule, HomeRoutingModule, NgxPaginationModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HomeRoutingModule,
+    NgxPaginationModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonToggleModule,
+  ],
 })
 export class HomeModule {
   constructor(entityDefinitionService: EntityDefinitionService) {
