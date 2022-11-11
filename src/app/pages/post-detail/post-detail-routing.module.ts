@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PageDetailComponent } from './page-detail.component';
+import { PostDetailComponent } from './post-detail.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: PageDetailComponent,
+    component: PostDetailComponent,
   },
 ];
 

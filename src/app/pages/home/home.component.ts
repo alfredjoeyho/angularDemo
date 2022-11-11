@@ -1,15 +1,11 @@
-import { userNames } from '../store/userNames';
+import { User } from '../store/user';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   EntityCollectionService,
   EntityCollectionServiceFactory,
 } from '@ngrx/data';
-import {
-  combineLatest,
-  map,
-  Observable,
-} from 'rxjs';
-import { Posts } from '../store/posts';
+import { combineLatest, map, Observable, Subscription } from 'rxjs';
+import { Post } from '../store/posts';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,71 +15,71 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   pages: number = 1;
-  subscription1$: any;
-  subscription2$: any;
   userNameEntered: string = '';
+
+  allPosts$: Observable<Post[]>;
+  postService: EntityCollectionService<Post>;
+
+  allUsers$: Observable<User[]>;
+  filteredUser$: Observable<User[]>;
+  filteredPost: Post[] = [];
+  allPosts: Post[] = [];
+  userService: EntityCollectionService<User>;
+  userid: number = 0;
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     serviceFactory: EntityCollectionServiceFactory,
     private router: Router
   ) {
-    this.postService = serviceFactory.create<Posts>('Post');
+    this.postService = serviceFactory.create<Post>('Post');
     this.allPosts$ = this.postService.entities$;
 
-    this.userNameService = serviceFactory.create<userNames>('userName');
-    this.alluserNames$ = this.userNameService.entities$;
-    this.filteredUser$ = this.userNameService.filteredEntities$;
+    this.userService = serviceFactory.create<User>('User');
+    this.allUsers$ = this.userService.entities$;
+    this.filteredUser$ = this.userService.filteredEntities$;
   }
-
-  allPosts$: Observable<Posts[]>;
-  postService: EntityCollectionService<Posts>;
-
-  alluserNames$: Observable<userNames[]>;
-  filteredUser$: Observable<userNames[]>;
-  filteredPost: Posts[] = [];
-  allPost: Posts[] = [];
-  userNameService: EntityCollectionService<userNames>;
-  userid: number = 0;
 
   ngOnInit(): void {
     this.postService.getAll();
-    this.userNameService.getAll();
-    this.subscription2$ = this.allPosts$.subscribe((posts: Posts[]) => {
-      this.allPost = posts;
-    });
+    this.userService.getAll();
+    this.subscriptions.push(
+      this.allPosts$.subscribe((posts: Post[]) => {
+        this.allPosts = posts;
+      })
+    );
   }
 
-  getPostDetails(post: Posts) {
+  getPostDetails(post: Post) {
     this.router.navigate(['/postdetails'], {
       state: { post: post },
     });
   }
 
   ngOnDestroy(): void {
-    if (this.subscription1$) {
-      this.subscription1$.unsubscribe();
-    }
-    this.subscription2$.unsubscribe();
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  searchUser(): any {
-    this.allPost = <Posts[]>[];
-    this.subscription1$ = combineLatest([
+  searchUser() {
+    this.allPosts = <Post[]>[];
+    const data$ = combineLatest([
       this.filteredUser$.pipe(
-        map((txs) => txs.find((txn) => txn.name === this.userNameEntered))
+        map((txs) => txs.find((txn) => txn.username === this.userNameEntered))
       ),
       this.allPosts$,
-    ]).subscribe(
-      ([res1, res2]) => {
+    ]);
+
+    this.subscriptions.push(
+      data$.subscribe(([res1, res2]) => {
         res2.forEach((element) => {
           if (element) {
             if (element.userId === res1?.id) {
-              this.allPost.push(element);
+              this.allPosts.push(element);
             }
           }
         });
-      },
-      (err) => console.error(err)
+      })
     );
   }
 }

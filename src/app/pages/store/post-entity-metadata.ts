@@ -1,8 +1,8 @@
 import { EntityMetadataMap } from '@ngrx/data';
-import { Posts } from './posts';
+import { Post } from './posts';
 
 export const postsEntityMetaData: EntityMetadataMap = {
   Post: {
-    selectId: (post: Posts) => post.id,
+    selectId: (post: Post) => post.id,
   },
 };

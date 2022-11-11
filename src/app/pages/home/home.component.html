@@ -8,7 +8,8 @@
     <div
       class="col pointer"
       *ngFor="
-        let post of allPost | paginate: { itemsPerPage: 10, currentPage: pages }
+        let post of allPosts
+          | paginate: { itemsPerPage: 10, currentPage: pages }
       "
       (click)="getPostDetails(post)"
     >

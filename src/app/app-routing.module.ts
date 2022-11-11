@@ -15,13 +15,15 @@ const routes: Routes = [
   {
     path: 'postdetails',
     loadChildren: () =>
-      import('./pages/page-detail/post-detail.module').then((m) => m.PostDetailModule),
+      import('./pages/post-detail/post-detail.module').then(
+        (m) => m.PostDetailModule
+      ),
   },
 ];
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

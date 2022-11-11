@@ -3,11 +3,11 @@ import { ActivatedRoute, Navigation, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-page-detail',
-  templateUrl: './page-detail.component.html',
-  styleUrls: ['./page-detail.component.scss'],
+  selector: 'app-post-detail',
+  templateUrl: './post-detail.component.html',
+  styleUrls: ['./post-detail.component.scss'],
 })
-export class PageDetailComponent {
+export class PostDetailComponent {
   body: string = '';
   userId: number = 0;
   id: number = 0;

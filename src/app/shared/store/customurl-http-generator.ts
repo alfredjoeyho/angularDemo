@@ -23,7 +23,7 @@ export class CustomurlHttpGenerator extends DefaultHttpUrlGenerator {
       };
       this.registerHttpResourceUrls({ [entityName]: resourceURLs });
     }
-    if (entityName == 'userName') {
+    if (entityName == 'User') {
       resourceURLs = {
         collectionResourceUrl: ' https://jsonplaceholder.typicode.com/users/',
         entityResourceUrl: ' https://jsonplaceholder.typicode.com/users/',

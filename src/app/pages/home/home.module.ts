@@ -5,16 +5,16 @@ import { EntityDefinitionService } from '@ngrx/data';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home.component';
 import { postsEntityMetaData } from '../store/post-entity-metadata';
-import { userNamesEntityMetaData } from '../store/userName-entity-metadata';
+import { usersEntityMetaData } from '../store/user-entity-metadata';
 import { HomeRoutingModule } from './home-routing.module';
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [CommonModule, FormsModule,HomeRoutingModule, NgxPaginationModule],
+  imports: [CommonModule, FormsModule, HomeRoutingModule, NgxPaginationModule],
 })
 export class HomeModule {
   constructor(entityDefinitionService: EntityDefinitionService) {
     entityDefinitionService.registerMetadataMap(postsEntityMetaData);
-    entityDefinitionService.registerMetadataMap(userNamesEntityMetaData);
+    entityDefinitionService.registerMetadataMap(usersEntityMetaData);
   }
 }
