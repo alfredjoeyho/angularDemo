@@ -1,3 +1,5 @@
+import { UserService } from './../../shared/services/user.service';
+import { PostService } from './../../shared/services/post.service';
 import { User } from '../store/user';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
@@ -25,32 +27,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   userNameEntered: string = '';
 
   allPosts$: Observable<Post[]>;
-  postService: EntityCollectionService<Post>;
+  allPosts: Post[] = [];
 
   allUsers$: Observable<User[]>;
-  filteredUser$: Observable<User[]>;
-  //filteredPost: Post[] = [];
-  allPosts: Post[] = [];
-  userService: EntityCollectionService<User>;
   userid: number = 0;
 
   private subscriptions: Subscription[] = [];
 
   constructor(
-    serviceFactory: EntityCollectionServiceFactory,
+    private postService: PostService,
+    private userService: UserService,
     private router: Router
-  ) {
-    this.postService = serviceFactory.create<Post>('Post');
-    this.allPosts$ = this.postService.entities$;
-
-    this.userService = serviceFactory.create<User>('User');
-    this.allUsers$ = this.userService.entities$;
-    this.filteredUser$ = this.userService.filteredEntities$;
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.postService.getAll();
-    this.userService.getAll();
+    this.allPosts$ = this.postService.getAllPosts();
+    this.allUsers$ = this.userService.getAllUsers();
+
     this.subscriptions.push(
       this.allPosts$.subscribe((posts: Post[]) => {
         this.allPosts = posts;
@@ -58,14 +51,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  getPostDetails(post: Post) {
-    this.allUsers$
-      .pipe(map((users) => users.find((u) => u.id === post.userId)))
-      .subscribe((user) => {
-        this.router.navigate(['/postdetails'], {
-          state: { post, user },
-        });
-      });
+  getPostDetails(id: number) {
+    this.router.navigate(['postdetails', id]);
   }
 
   ngOnDestroy(): void {
@@ -75,7 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   searchUser() {
     this.allPosts = <Post[]>[];
     const data$ = combineLatest([
-      this.filteredUser$.pipe(
+      this.allUsers$.pipe(
         map((txs) => txs.find((txn) => txn.username === this.userNameEntered))
       ),
       this.allPosts$,

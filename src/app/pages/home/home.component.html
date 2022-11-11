@@ -11,7 +11,7 @@
         let post of allPosts
           | paginate: { itemsPerPage: 10, currentPage: pages }
       "
-      (click)="getPostDetails(post)"
+      (click)="getPostDetails(post.id)"
     >
       <div class="card">
         <div class="card-body card-background">

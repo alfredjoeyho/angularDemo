@@ -10,11 +10,7 @@ export class CustomurlHttpGenerator extends DefaultHttpUrlGenerator {
     super(pluralizer);
   }
 
-  protected override getResourceUrls(
-    entityName: string,
-    root: string,
-    trailingSlashEndpoints?: boolean
-  ): HttpResourceUrls {
+  protected override getResourceUrls(entityName: string): HttpResourceUrls {
     let resourceURLs = this.knownHttpResourceUrls[entityName];
     if (entityName == 'Post') {
       resourceURLs = {
