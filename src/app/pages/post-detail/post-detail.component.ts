@@ -9,7 +9,8 @@ import { Location } from '@angular/common';
 })
 export class PostDetailComponent {
   body: string = '';
-  userId: number = 0;
+  username: string = '';
+  userFullName: string = '';
   id: number = 0;
   title: string = '';
 
@@ -21,9 +22,10 @@ export class PostDetailComponent {
     let nav: Navigation | null = this.router.getCurrentNavigation();
     if (nav && nav.extras && nav.extras.state) {
       this.body = nav.extras.state['post']['body'] as string;
-      this.userId = nav.extras.state['post']['userId'] as number;
       this.id = nav.extras.state['post']['id'] as number;
       this.title = nav.extras.state['post']['title'] as string;
+      this.username = nav.extras.state['user']['username'] as string;
+      this.userFullName = nav.extras.state['user']['name'] as string;
     }
   }
 

@@ -4,7 +4,14 @@ import {
   EntityCollectionService,
   EntityCollectionServiceFactory,
 } from '@ngrx/data';
-import { combineLatest, map, Observable, Subscription } from 'rxjs';
+import {
+  combineLatest,
+  filter,
+  map,
+  Observable,
+  single,
+  Subscription,
+} from 'rxjs';
 import { Post } from '../store/posts';
 import { Router } from '@angular/router';
 
@@ -22,7 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   allUsers$: Observable<User[]>;
   filteredUser$: Observable<User[]>;
-  filteredPost: Post[] = [];
+  //filteredPost: Post[] = [];
   allPosts: Post[] = [];
   userService: EntityCollectionService<User>;
   userid: number = 0;
@@ -52,9 +59,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getPostDetails(post: Post) {
-    this.router.navigate(['/postdetails'], {
-      state: { post: post },
-    });
+    this.allUsers$
+      .pipe(map((users) => users.find((u) => u.id === post.userId)))
+      .subscribe((user) => {
+        this.router.navigate(['/postdetails'], {
+          state: { post, user },
+        });
+      });
   }
 
   ngOnDestroy(): void {
