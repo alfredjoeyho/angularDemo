@@ -1,35 +1,36 @@
-<nav class="navbar navbar-dark bg-warning">
-  <div class="container-fluid">
-    <h1 class="navbar-brand">Posts</h1>
-  </div>
-</nav>
-<div class="container mt-2">
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div
-      class="col pointer"
-      *ngFor="
-        let post of allPosts
-          | paginate: { itemsPerPage: 10, currentPage: pages }
-      "
-      (click)="getPostDetails(post)"
-    >
-      <div class="card">
-        <div class="card-body card-background">
-          <h1 class="card-title font-white">title: {{ post.title }}</h1>
-        </div>
-      </div>
+<ng-container>
+  <nav class="navbar navbar-dark bg-warning">
+    <div class="container-fluid">
+      <h1 class="navbar-brand">Posts</h1>
+    </div>
+  </nav>
+    <mat-form-field class="mt-4">
+    <input
+      matInput
+      placeholder="Username"
+      [(ngModel)]="userNameEntered"
+      [ngModelOptions]="{ standalone: true }"
+    />
+    <mat-hint>Enter Username to search!</mat-hint>
+  </mat-form-field>
+  <mat-button-toggle class="ms-2 primary-bth-colour" (click)="searchUser()">Search</mat-button-toggle>
+  <div class="container mt-4 mb-12">
+    <div class="d-grid gap-3">
+      <button
+        class="col"
+        *ngFor="
+          let post of allPosts
+            | paginate: { itemsPerPage: 10, currentPage: pages }
+        "
+        (click)="getPostDetails(post)"
+        class="p-2 bg-light border"
+      >
+        title: {{ post.title }}
+      </button>
     </div>
   </div>
-</div>
 
-<textarea
-  matInput
-  [(ngModel)]="userNameEntered"
-  placeholder="Enter Username"
-></textarea>
-<button mat-button (click)="searchUser()">Search</button>
-
-<!-- <div class="container mt-2">
+  <!-- <div class="container mt-2">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" *ngFor="let post of allPosts$ | async">
       <div class="card">
@@ -48,7 +49,7 @@
   </div>
 </div> -->
 
-<!-- ------Name------
+  <!-- ------Name------
 <div class="container mt-2">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" *ngFor="let user of filteredUser$ | async">
@@ -68,7 +69,7 @@
   </div>
 </div> -->
 
-<!-- <div class="container mt-2">
+  <!-- <div class="container mt-2">
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" *ngFor="let user of filteredPost | paginate: { itemsPerPage: 10, currentPage: pages }">
       <div class="card">
@@ -80,4 +81,6 @@
   </div>
 </div> -->
 
-<pagination-controls (pageChange)="pages = $event"></pagination-controls>
+
+</ng-container>
+ <pagination-controls class="position-absolute end-position mt-2" (pageChange)="pages = $event"></pagination-controls>
