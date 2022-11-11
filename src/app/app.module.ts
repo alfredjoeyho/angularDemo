@@ -11,6 +11,9 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomurlHttpGenerator } from './shared/store/customurl-http-generator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +29,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       logOnly: environment.production,
     }),
     BrowserAnimationsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
   ],
   providers: [{ provide: HttpUrlGenerator, useClass: CustomurlHttpGenerator }],
   bootstrap: [AppComponent],
