@@ -35,7 +35,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getAllPosts() {
-    this.userNameEntered = '';
+    if (this.userNameEntered) this.userNameEntered = '';
+
     this.subscriptions.push(
       this.allPosts$.subscribe((posts: Post[]) => {
         this.allPosts = posts;
