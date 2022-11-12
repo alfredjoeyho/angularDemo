@@ -5,7 +5,7 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
-import { concatMap, filter, Observable, tap, map } from 'rxjs';
+import { concatMap, filter, map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,4 @@
-import { concatMap, filter, Observable, tap } from 'rxjs';
+import { concatMap, filter, Observable, tap, map } from 'rxjs';
 import { User } from './../../pages/store/user';
 import { Injectable } from '@angular/core';
 import {
@@ -20,6 +20,12 @@ export class UserService extends EntityCollectionServiceBase<User> {
       }),
       filter((loaded: boolean) => loaded),
       concatMap(() => this.entities$.pipe())
+    );
+  }
+
+  public getUserById(id: number): Observable<User | undefined> {
+    return this.getAllUsers().pipe(
+      map((users) => users.find((u) => u.id === id))
     );
   }
 }

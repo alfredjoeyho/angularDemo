@@ -1,8 +1,9 @@
+import { UserService } from './../../shared/services/user.service';
 import { PostService } from './../../shared/services/post.service';
 import { Post } from './../store/posts';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Navigation, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { User } from '../store/user';
 
@@ -18,12 +19,13 @@ export class PostDetailComponent implements OnInit {
   id: number = 0;
   title: string = '';
 
-  post: Observable<Post>;
-  user: Observable<User>;
+  post$: Observable<Post | undefined>;
+  user$: Observable<User | undefined>;
 
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
+    private userService: UserService,
     private location: Location
   ) {}
 
@@ -31,17 +33,11 @@ export class PostDetailComponent implements OnInit {
     const postId = this.route.snapshot.paramMap.get('postId');
 
     if (postId) {
-      this.postService.getPostById(Number(postId));
+      this.post$ = this.postService.getPostById(Number(postId));
+      this.user$ = this.post$.pipe(
+        switchMap((post) => this.userService.getUserById(post!.userId))
+      );
     }
-
-    // let nav: Navigation | null = this.router.getCurrentNavigation();
-    // if (nav && nav.extras && nav.extras.state) {
-    //   this.body = nav.extras.state['post']['body'] as string;
-    //   this.id = nav.extras.state['post']['id'] as number;
-    //   this.title = nav.extras.state['post']['title'] as string;
-    //   this.username = nav.extras.state['user']['username'] as string;
-    //   this.userFullName = nav.extras.state['user']['name'] as string;
-    // }
   }
 
   public backClicked() {
