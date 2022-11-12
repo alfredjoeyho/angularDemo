@@ -8,9 +8,17 @@
     <input matInput placeholder="Username" [(ngModel)]="userNameEntered" />
     <mat-hint>Enter Username to search!</mat-hint>
   </mat-form-field>
-  <mat-button-toggle class="ms-2 primary-bth-colour" (click)="searchUser()"
-    >Search</mat-button-toggle
+  <button
+    mat-button
+    class="ms-2 primary-bth-colour"
+    (click)="searchUser()"
+    [disabled]="!userNameEntered"
   >
+    Search
+  </button>
+  <button mat-button class="ms-2 primary-bth-colour" (click)="getAllPosts()">
+    Reset
+  </button>
   <div class="container mt-4 mb-12">
     <div class="d-grid gap-3">
       <button

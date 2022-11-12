@@ -10,7 +10,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -22,7 +22,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonToggleModule,
+    MatButtonModule,
   ],
 })
 export class HomeModule {

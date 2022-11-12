@@ -2,18 +2,7 @@ import { UserService } from './../../shared/services/user.service';
 import { PostService } from './../../shared/services/post.service';
 import { User } from '../store/user';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  EntityCollectionService,
-  EntityCollectionServiceFactory,
-} from '@ngrx/data';
-import {
-  combineLatest,
-  filter,
-  map,
-  Observable,
-  single,
-  Subscription,
-} from 'rxjs';
+import { combineLatest, map, Observable, Subscription } from 'rxjs';
 import { Post } from '../store/posts';
 import { Router } from '@angular/router';
 
@@ -25,13 +14,11 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
   pages: number = 1;
   userNameEntered: string = '';
-
-  allPosts$: Observable<Post[]>;
   allPosts: Post[] = [];
-
-  allUsers$: Observable<User[]>;
   userid: number = 0;
 
+  private allPosts$: Observable<Post[]>;
+  private allUsers$: Observable<User[]>;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -44,6 +31,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.allPosts$ = this.postService.getAllPosts();
     this.allUsers$ = this.userService.getAllUsers();
 
+    this.getAllPosts();
+  }
+
+  getAllPosts() {
+    this.userNameEntered = '';
     this.subscriptions.push(
       this.allPosts$.subscribe((posts: Post[]) => {
         this.allPosts = posts;
@@ -60,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   searchUser() {
-    this.allPosts = <Post[]>[];
+    this.allPosts = [];
     const data$ = combineLatest([
       this.allUsers$.pipe(
         map((txs) => txs.find((txn) => txn.username === this.userNameEntered))
